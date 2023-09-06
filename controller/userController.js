@@ -25,7 +25,7 @@ const sendVerifyMail = async (name, email, user_id, check) => {
         from: "sportopia2000@gmail.com",
         to: email,
         subject: "To verify your mail",
-        html: `<p>Hii ${name}, Please click here to <a href="http://localhost:5173/verify/${user_id}">Verify</a> your mail</p>`,
+        html: `<p>Hii ${name}, Please click here to <a href="https://spotopia.site/verify/${user_id}">Verify</a> your mail</p>`,
       };
       transporter.sendMail(mailOption, function (error, info) {
         if (error) {
@@ -39,7 +39,7 @@ const sendVerifyMail = async (name, email, user_id, check) => {
         from: "sportopia2000@gmail.com",
         to: email,
         subject: "To verify your mail",
-        html: `<p>Hii ${name}, Please click here to <a href="http://localhost:5173/turf/verifyTurf/${user_id}">Verify</a> your mail</p>`,
+        html: `<p>Hii ${name}, Please click here to <a href="https://spotopia.site/turf/verifyTurf/${user_id}">Verify</a> your mail</p>`,
       };
       transporter.sendMail(mailOption, function (error, info) {
         if (error) {
@@ -72,7 +72,7 @@ const sendForgotPasswordMail = async (email, name, userId) => {
       from: "sportopia2000@gmail.com",
       to: email,
       subject: "Forgott password",
-      html: `<p>Hii ${name} please click <a href="http://localhost:5173/resetPassword/${userId}">here</a> if you wan't to reset password your email.</p>`,
+      html: `<p>Hii ${name} please click <a href="https://spotopia.site/resetPassword/${userId}">here</a> if you wan't to reset password your email.</p>`,
     };
 
     transporter.sendMail(mailOption, (error, info) => {
