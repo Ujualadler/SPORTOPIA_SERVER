@@ -4,24 +4,29 @@ const dotenv = require("dotenv").config();
 const { connectDb } = require("./config/dbConnection");
 const socketIo = require("socket.io");
 
-const userRouter = require("./routes/users.js");
-const turfRouter = require("./routes/turf.js");
-const adminRouter = require("./routes/admin.js");
-
-const app = express();
-app.use(express.json({ limit: "100mb", extended: true }));
 const corsOptions = {
   origin: '*',
   methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
+
 app.use(cors(corsOptions));
 app.use(express.static("public"));
-
 app.use("/", userRouter);
 app.use("/turf", turfRouter);
 app.use("/admin", adminRouter);
+
+
+const userRouter = require("./routes/users.js");
+const turfRouter = require("./routes/turf.js");
+const adminRouter = require("./routes/admin.js");
+
+const app = express();
+app.use(express.json({ limit: "100mb", extended: true }));
+
+
+
 
 const PORT = process.env.MONGODB_PORT;
 
@@ -33,7 +38,7 @@ const server = app.listen(PORT, () =>
 
 const io = socketIo(server, {
   cors: {
-    origin: "*",
+    origin: 'https://www.spotopia.site',
     credentials: true,
   },
 })
