@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json({ limit: "100mb", extended: true }));
 
 const corsOptions = {
-  origin: "*",
+  origin: "https://www.spotopia.site",
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
