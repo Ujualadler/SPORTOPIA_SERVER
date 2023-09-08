@@ -245,7 +245,9 @@ const clubGalleryAdd = async (req, res) => {
 const getGallery = async (req, res) => {
   try {
     const clubId = req.body.clubId;
+    console.log(clubId,'clubidddddddddddddddddddddddddd')
     const data = await clubModel.findOne({ _id: clubId }).sort({ _id: -1 });
+    console.log(data,'ggggggggggggggggggggggggggg',data.gallery,'dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     res.status(200).json({ gallery: data.gallery });
   } catch (error) {}
 };

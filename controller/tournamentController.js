@@ -425,7 +425,15 @@ const addWinners = async (req, res) => {
 };
 
 const findWinners=async(req,res)=>{
-  
+  try {
+    const id=req.query.id
+    const tournament=await tournamentModel.findById(id)
+    const winners=tournament.winners
+    res.status(200).json({winner:winners})
+    
+  } catch (error) {
+    return res.status(500).json({ status: false, message: 'Internal Server Error' });
+  }
 }
 
 
@@ -445,5 +453,6 @@ module.exports = {
   findMatches,
   deleteGame,
   editGame,
-  addWinners
+  addWinners,
+  findWinners
 };
