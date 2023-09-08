@@ -12,6 +12,7 @@ const createCheckOut = async (req, res) => {
     const { totalAmount, totalAdvance, turfId, data, date, selectedSlots } =
       req.body;
     const details = req.body;
+    console.log(details)
     const existingBooking = await bookingModel.find({
       turf: turfId,
       bookedDate: date,
