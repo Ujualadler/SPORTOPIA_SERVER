@@ -38,7 +38,7 @@ const server = app.listen(PORT, () =>
 
 const io = socketIo(server, {
   cors: {
-    origin: 'https://www.spotopia.site',
+    origin: "*",
     credentials: true,
   },
 })
