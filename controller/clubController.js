@@ -239,17 +239,19 @@ const clubGalleryAdd = async (req, res) => {
     console.log(img, file);
   } catch (error) {
     console.log(error);
+    res.status(500).json({ errMsg: "Server Error" });
+
   }
 };
 
 const getGallery = async (req, res) => {
   try {
     const clubId = req.body.clubId;
-    console.log(clubId,'clubidddddddddddddddddddddddddd')
     const data = await clubModel.findOne({ _id: clubId }).sort({ _id: -1 });
-    console.log(data,'ggggggggggggggggggggggggggg',data.gallery,'dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-    res.status(200).json({ gallery: data.gallery });
-  } catch (error) {}
+    res.status(200).json({ gallery: data.gallery});
+  } catch (error) {
+    res.status(500).json({ errMsg: "Server Error" });
+  }
 };
 
 const removeGallery = async (req, res) => {
