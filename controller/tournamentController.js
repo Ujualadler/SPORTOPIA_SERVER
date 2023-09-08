@@ -499,15 +499,9 @@ const deleteWinners = async (req, res) => {
     if (!updatedTournament) {
       return res.status(404).json({ message: "Tournament not found" });
     }
-
-    const tournament = await tournamentModel
-      .findOne({ _id: id })
-      .populate({ path: "winners.teamOne", model: "Club" })
-      .populate({ path: "winners.teamTwo", model: "Club" });
-
     return res
       .status(200)
-      .json({ status: true, updatedWinner: tournament.winners });
+      .json({ status: true});
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
