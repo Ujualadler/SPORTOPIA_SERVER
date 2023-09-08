@@ -60,6 +60,7 @@ router.get('/findWinners',auth.verifyToken,tournamentController.findWinners)
 router.post('/deleteGame',auth.verifyToken,tournamentController.deleteGame)
 router.post('/editGame',auth.verifyToken,tournamentController.editGame)
 router.post('/addWinners',auth.verifyToken,tournamentController.addWinners)
+router.post('/deleteWinners',auth.verifyToken,tournamentController.deleteWinners)
 router.get('/getBanner',adminController.getBanner)
 
 

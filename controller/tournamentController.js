@@ -91,7 +91,8 @@ const getTournamentDetails = async (req, res) => {
     const result = await tournamentModel
       .findOne({ _id: id })
       .populate("clubId")
-      .populate("joinedClubs").populate({
+      .populate("joinedClubs")
+      .populate({
         path: "winners",
         populate: {
           path: "first second",
@@ -109,17 +110,32 @@ const getTournamentDetails = async (req, res) => {
         if (result) {
           res
             .status(200)
-            .json({ result, status: true, clubs: result.joinedClubs,winners:result.winners[0]});
+            .json({
+              result,
+              status: true,
+              clubs: result.joinedClubs,
+              winners: result.winners[0],
+            });
         }
       } else {
         res
           .status(200)
-          .json({ data, status: false, clubs: result.joinedClubs,winners:result.winners[0] });
+          .json({
+            data,
+            status: false,
+            clubs: result.joinedClubs,
+            winners: result.winners[0],
+          });
       }
     } else {
       res
         .status(200)
-        .json({ joined, status: "join", clubs: result.joinedClubs,winners:result.winners[0] });
+        .json({
+          joined,
+          status: "join",
+          clubs: result.joinedClubs,
+          winners: result.winners[0],
+        });
     }
   } catch (error) {
     res
@@ -265,7 +281,9 @@ const editTournament = async (req, res) => {
     res.status(201).json({ status: "success", tournament: newTournament });
   } catch (error) {
     console.error("Error editing tournament:", error);
-    res.status(500).json({ error: "An error occurred while editing the tournament" });
+    res
+      .status(500)
+      .json({ error: "An error occurred while editing the tournament" });
   }
 };
 
@@ -273,7 +291,7 @@ const addGame = async (req, res) => {
   try {
     const { id, matchName, teamOne, teamTwo, time, date } = req.body;
     // Find the tournament by its ID
-    const istournament= await tournamentModel.findById(id);
+    const istournament = await tournamentModel.findById(id);
     if (!istournament) {
       return res.status(404).json({ message: "Tournament not found" });
     }
@@ -304,13 +322,14 @@ const addGame = async (req, res) => {
     await istournament.save();
 
     const tournament = await tournamentModel
-    .findOne({ _id: id })
-    .populate({ path: 'matches.teamOne', model: 'Club' })
-    .populate({ path: 'matches.teamTwo', model: 'Club' })
-    .populate('joinedClubs');
+      .findOne({ _id: id })
+      .populate({ path: "matches.teamOne", model: "Club" })
+      .populate({ path: "matches.teamTwo", model: "Club" })
+      .populate("joinedClubs");
 
-    return res.status(200).json({ status: true, updatedTournament:tournament.matches });
-
+    return res
+      .status(200)
+      .json({ status: true, updatedTournament: tournament.matches });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -323,17 +342,22 @@ const findMatches = async (req, res) => {
 
     const tournament = await tournamentModel
       .findOne({ _id: id })
-      .populate({ path: 'matches.teamOne', model: 'Club' })
-      .populate({ path: 'matches.teamTwo', model: 'Club' })
-      .populate('joinedClubs');
+      .populate({ path: "matches.teamOne", model: "Club" })
+      .populate({ path: "matches.teamTwo", model: "Club" })
+      .populate("joinedClubs");
 
-    return res.status(200).json({tournament:tournament, matches: tournament.matches, clubs: tournament.joinedClubs });
+    return res
+      .status(200)
+      .json({
+        tournament: tournament,
+        matches: tournament.matches,
+        clubs: tournament.joinedClubs,
+      });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 const deleteGame = async (req, res) => {
   try {
@@ -350,15 +374,16 @@ const deleteGame = async (req, res) => {
     if (!updatedTournament) {
       return res.status(404).json({ message: "Tournament not found" });
     }
-    
+
     const tournament = await tournamentModel
-    .findOne({ _id: id })
-    .populate({ path: 'matches.teamOne', model: 'Club' })
-    .populate({ path: 'matches.teamTwo', model: 'Club' })
-    .populate('joinedClubs');
+      .findOne({ _id: id })
+      .populate({ path: "matches.teamOne", model: "Club" })
+      .populate({ path: "matches.teamTwo", model: "Club" })
+      .populate("joinedClubs");
 
-
-    return res.status(200).json({ status: true, updatedTournament:tournament.matches });
+    return res
+      .status(200)
+      .json({ status: true, updatedTournament: tournament.matches });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -367,8 +392,19 @@ const deleteGame = async (req, res) => {
 
 const editGame = async (req, res) => {
   try {
-    const { id, matchId, matchName, teamOne, teamTwo, time, date,scoreOne,scoreTwo,winner } = req.body;
-   
+    const {
+      id,
+      matchId,
+      matchName,
+      teamOne,
+      teamTwo,
+      time,
+      date,
+      scoreOne,
+      scoreTwo,
+      winner,
+    } = req.body;
+
     const updatedTournament = await tournamentModel.findOneAndUpdate(
       { _id: id, "matches._id": matchId },
       {
@@ -390,13 +426,14 @@ const editGame = async (req, res) => {
       return res.status(404).json({ message: "Tournament or match not found" });
     }
     const tournament = await tournamentModel
-    .findOne({ _id: id })
-    .populate({ path: 'matches.teamOne', model: 'Club' })
-    .populate({ path: 'matches.teamTwo', model: 'Club' })
-    .populate('joinedClubs');
+      .findOne({ _id: id })
+      .populate({ path: "matches.teamOne", model: "Club" })
+      .populate({ path: "matches.teamTwo", model: "Club" })
+      .populate("joinedClubs");
 
-    return res.status(200).json({ status: true, updatedTournament:tournament.matches });
-
+    return res
+      .status(200)
+      .json({ status: true, updatedTournament: tournament.matches });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -410,35 +447,72 @@ const addWinners = async (req, res) => {
     const tournament = await tournamentModel.findById(id);
 
     if (!tournament) {
-      return res.status(404).json({ status: false, message: 'Tournament not found' });
+      return res
+        .status(404)
+        .json({ status: false, message: "Tournament not found" });
     }
     // Add the winners to the tournament
-    tournament.winners.push({ first, second});
+    tournament.winners.push({ first, second });
     // Save the updated tournament document
     await tournament.save();
 
-    return res.status(200).json({ status: true, message: 'Winners added successfully' });
+    return res
+      .status(200)
+      .json({ status: true, message: "Winners added successfully" });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ status: false, message: 'Internal Server Error' });
+    return res
+      .status(500)
+      .json({ status: false, message: "Internal Server Error" });
   }
 };
 
-const findWinners=async(req,res)=>{
+const findWinners = async (req, res) => {
   try {
-    const id=req.query.id
-    const tournament=await tournamentModel.findById(id).populate({ path: 'winners.second', model: 'Club' })
-    .populate({ path: 'winners.first', model: 'Club' })
-    const winners=tournament.winners
-    res.status(200).json({winner:winners})
-    
+    const id = req.query.id;
+    const tournament = await tournamentModel
+      .findById(id)
+      .populate({ path: "winners.second", model: "Club" })
+      .populate({ path: "winners.first", model: "Club" });
+    const winners = tournament.winners;
+    res.status(200).json({ winner: winners });
   } catch (error) {
-    return res.status(500).json({ status: false, message: 'Internal Server Error' });
+    return res
+      .status(500)
+      .json({ status: false, message: "Internal Server Error" });
   }
-}
+};
 
+const deleteWinners = async (req, res) => {
+  try {
+    const { winnerId } = req.body;
+    const id = req.query.id;
 
+    const updatedTournament = await tournamentModel.findByIdAndUpdate(
+      id,
+      {
+        $pull: { winners: { _id: winnerId } },
+      },
+      { new: true }
+    );
 
+    if (!updatedTournament) {
+      return res.status(404).json({ message: "Tournament not found" });
+    }
+
+    const tournament = await tournamentModel
+      .findOne({ _id: id })
+      .populate({ path: "winners.teamOne", model: "Club" })
+      .populate({ path: "winners.teamTwo", model: "Club" });
+
+    return res
+      .status(200)
+      .json({ status: true, updatedTournament: tournament.winners });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
   createTournament,
@@ -455,5 +529,6 @@ module.exports = {
   deleteGame,
   editGame,
   addWinners,
-  findWinners
+  findWinners,
+  deleteWinners,
 };
