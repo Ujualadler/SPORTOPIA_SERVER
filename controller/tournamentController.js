@@ -507,7 +507,7 @@ const deleteWinners = async (req, res) => {
 
     return res
       .status(200)
-      .json({ status: true, updatedTournament: tournament.winners });
+      .json({ status: true, updatedWinner: tournament.winners });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
