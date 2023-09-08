@@ -427,7 +427,8 @@ const addWinners = async (req, res) => {
 const findWinners=async(req,res)=>{
   try {
     const id=req.query.id
-    const tournament=await tournamentModel.findById(id)
+    const tournament=await tournamentModel.findById(id).populate({ path: 'winners.second', model: 'Club' })
+    .populate({ path: 'winners.first', model: 'Club' })
     const winners=tournament.winners
     res.status(200).json({winner:winners})
     
