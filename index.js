@@ -17,13 +17,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.static("public"));
 
+const userRouter = require("./routes/users.js");
+const turfRouter = require("./routes/turf.js");
+const adminRouter = require("./routes/admin.js");
+
 app.use("/", userRouter);
 app.use("/turf", turfRouter);
 app.use("/admin", adminRouter);
 
-const userRouter = require("./routes/users.js");
-const turfRouter = require("./routes/turf.js");
-const adminRouter = require("./routes/admin.js");
+
 
 const PORT = process.env.MONGODB_PORT;
 
