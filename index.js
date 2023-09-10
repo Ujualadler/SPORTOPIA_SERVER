@@ -3,9 +3,6 @@ const cors = require("cors");
 const dotenv = require("dotenv").config();
 const { connectDb } = require("./config/dbConnection");
 const socketIo = require("socket.io");
-const bookingController=require('./controller/bookingController')
-const auth=require("./middleware/auth")
-
 
 const app = express();
 
@@ -29,7 +26,7 @@ app.use("/", userRouter);
 app.use("/turf", turfRouter);
 app.use("/admin", adminRouter);
 
-app.post('/createCheckout', cors(corsOptions), auth.verifyToken,bookingController.createCheckOut);
+
 
 const PORT = process.env.MONGODB_PORT;
 
