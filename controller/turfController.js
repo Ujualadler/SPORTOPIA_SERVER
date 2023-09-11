@@ -112,6 +112,7 @@ const getTurfDetail = async (req, res) => {
 			res.status(500).send({ error: "no turf" });
 		}
 	} catch (error) {
+		console.log(error)
 		res.json({ status: "failed", message: error.message });
 	}
 };
