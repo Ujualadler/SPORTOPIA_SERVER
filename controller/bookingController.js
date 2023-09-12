@@ -8,8 +8,7 @@ const turfModel = require("../models/turfSchema");
 // checkout page loading 
 
 const createCheckOut = async (req, res) => {
-  try {
-    console.log('sdfsdfsdfsdfsdfsdfsssss');   
+  try { 
     const { totalAmount, totalAdvance, turfId, data, date, selectedSlots } =
       req.body;
     const details = req.body;

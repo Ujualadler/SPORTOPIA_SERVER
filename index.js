@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json({ limit: "100mb", extended: true }));
 
 const corsOptions = {
-  origin: "*", // Allow requests from any origin
+  origin: "*", 
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -97,8 +97,7 @@ io.of("/booking").on("connection", (socket) => {
       1
     );
 
-    console.log(onBooking);
-
+    
     // Emit the message to the specific room based on the turfId
     io.of("/booking")
       .to(receivedturfId)
