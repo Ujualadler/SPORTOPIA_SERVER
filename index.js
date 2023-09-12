@@ -14,21 +14,8 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-
-const corsForCreateCheckout = (req, res, next) => {
-  if (req.path === "/createCheckout") {
-    next(); // Skip CORS for /createCheckout
-  } else {
-    cors(corsOptions)(req, res, next); // Apply CORS for other routes
-  }
-};
-
-
-// Apply CORS middleware globally for all other routes
-app.use(corsForCreateCheckout);
+app.use(cors());
 app.use(express.static("public"));
-
-
 
 const userRouter = require("./routes/users.js");
 const turfRouter = require("./routes/turf.js");
