@@ -38,10 +38,10 @@ const server = app.listen(PORT, () =>
 );
 
 const io = socketIo(server, {
-  cors: {
-    origin: "*",
-    credentials: true,
-  },
+  // cors: {
+  //   origin: "*",
+  //   credentials: true,
+  // },
 });
 
 io.of("/chat").on("connection", (socket) => {
