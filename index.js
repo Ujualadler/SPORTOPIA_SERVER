@@ -1,6 +1,4 @@
 const express = require("express");
-const bookingController=require('./controller/bookingController')
-const auth=require("./middleware/auth")
 const cors = require("cors");
 const dotenv = require("dotenv").config();
 const { connectDb } = require("./config/dbConnection");
@@ -16,10 +14,19 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-app.post('/createCheckout',auth.verifyToken,bookingController.createCheckOut)
 
+const corsForCreateCheckout = (req, res, next) => {
+  if (req.path === "/createCheckout") {
+    next(); // Skip CORS for /createCheckout
+  } else {
+    cors(corsOptions)(req, res, next); // Apply CORS for other routes
+  }
+};
 
-app.use(cors());
+app.post('/createCheckout', auth.verifyToken, bookingController.createCheckOut);
+
+// Apply CORS middleware globally for all other routes
+app.use(corsForCreateCheckout);
 app.use(express.static("public"));
 
 
