@@ -8,15 +8,15 @@ const app = express();
 
 app.use(express.json({ limit: "100mb", extended: true }));
 
-const corsOptions = {
-  origin: ["*"], // Allow requests from any origin
-  methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+// const corsOptions = {
+//   origin: ["*"], // Allow requests from any origin
+//   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+// };
 
 
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(express.static("public"));
 
 const userRouter = require("./routes/users.js");
