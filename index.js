@@ -8,11 +8,11 @@ const app = express();
 
 app.use(express.json({ limit: "100mb", extended: true }));
 
-// const corsOptions = {
-//   origin: ["*"], // Allow requests from any origin
-//   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-// };
+const corsOptions = {
+  origin: "*", // Allow requests from any origin
+  methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
 
 
@@ -38,10 +38,10 @@ const server = app.listen(PORT, () =>
 );
 
 const io = socketIo(server, {
-  // cors: {
-  //   origin: "*",
-  //   credentials: true,
-  // },
+  cors: {
+    origin: "*",
+    credentials: true,
+  },
 });
 
 io.of("/chat").on("connection", (socket) => {
