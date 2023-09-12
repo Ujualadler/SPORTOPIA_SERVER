@@ -16,7 +16,7 @@ app.use(express.json({ limit: "100mb", extended: true }));
 
 
 
-app.use(cors);
+app.use(cors());
 app.use(express.static("public"));
 
 const userRouter = require("./routes/users.js");
