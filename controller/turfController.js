@@ -86,6 +86,7 @@ const getTurfsAdmin = async (req, res) => {
 // finding individual turfs
 
 const getTurfDetail = async (req, res) => {
+	console.log("1111111111111111111")
 	const date = new Date();
 	date.setHours(date.getHours() + 5);
 	date.setMinutes(date.getMinutes() + 30);
@@ -94,6 +95,8 @@ const getTurfDetail = async (req, res) => {
 
 	try {
 		const id = req.query.id;
+
+		console.log(id,'222222222222222222222222222222')
 
 		const turfData = await turfModel.findOne({ _id: id }).lean();
 		const turfBookings = await bookingModel
@@ -106,9 +109,12 @@ const getTurfDetail = async (req, res) => {
 		// append booked dates and slots to turfData
 		turfData.turfBookings = turfBookings;
 
+		console.log(turfData,'3333333333333333333333333')
+
 		if (turfData) {
 			res.status(200).json({ data: turfData });
 		} else {
+			console.log('444444444444444444444444444')
 			res.status(500).send({ error: "no turf" });
 		}
 	} catch (error) {
