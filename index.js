@@ -1,4 +1,6 @@
 const express = require("express");
+const bookingController=require('./controller/bookingController')
+const auth=require("./middleware/auth")
 const cors = require("cors");
 const dotenv = require("dotenv").config();
 const { connectDb } = require("./config/dbConnection");
@@ -14,10 +16,13 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
+app.post('/createCheckout',auth.verifyToken,bookingController.createCheckOut)
 
 
 app.use(cors());
 app.use(express.static("public"));
+
+
 
 const userRouter = require("./routes/users.js");
 const turfRouter = require("./routes/turf.js");
