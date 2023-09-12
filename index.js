@@ -23,7 +23,6 @@ const corsForCreateCheckout = (req, res, next) => {
   }
 };
 
-app.post('/createCheckout', auth.verifyToken, bookingController.createCheckOut);
 
 // Apply CORS middleware globally for all other routes
 app.use(corsForCreateCheckout);
