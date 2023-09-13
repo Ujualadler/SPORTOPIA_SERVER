@@ -28,6 +28,7 @@ try {
     const turfId=req.query.id
 
     const reviews=await reviewModel.find({turf:turfId}).populate('turf').populate('user')
+    console.log(reviews)
     if(reviews){
     const rating=reviews.map((doc)=>{
         return(doc.rating)
@@ -36,9 +37,9 @@ try {
     })
     const totalRating=rating/reviews.length
     res.status(200).json({reviews,totalRating})
-}else{
-    res.status(200).json({reviews:[],totalRating:0})
-}
+    }else{
+        res.status(200).json({reviews:[],totalRating:0})
+    }
 
 } catch (error) {
     res.status(500).json('server error')
