@@ -36,6 +36,8 @@ try {
     })
     const totalRating=rating/reviews.length
     res.status(200).json({reviews,totalRating})
+}else{
+    res.status(200).json({reviews:[],totalRating:0})
 }
 
 } catch (error) {
