@@ -12,9 +12,18 @@ const corsOptions = {
   origin: "*", 
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
+
+app.options('/createCheckout', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Replace with your frontend domain
+  res.setHeader('Access-Control-Allow-Methods', 'POST'); // Add the allowed methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Add the allowed headers
+  res.status(204).send();
+});
+
 app.use(express.static("public"));
 
 const userRouter = require("./routes/users.js");
