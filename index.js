@@ -6,23 +6,24 @@ const socketIo = require("socket.io");
 
 const app = express();
 
-app.use(express.json({ limit: "100mb", extended: true }));
 
+const allowedOrigins = ['http://localhost:5173', 'https://www.spotopia.site', 'https://spotopia.site'];
 const corsOptions = {
-  origin: "*", 
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  optionsSuccessStatus: 204,
+  optionsSuccessStatus: 204, // Set the status code for successful OPTIONS requests
 };
 
 app.use(cors(corsOptions));
 
-app.options('/createCheckout', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*'); // Replace with your frontend domain
-  res.setHeader('Access-Control-Allow-Methods', 'POST'); // Add the allowed methods
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Add the allowed headers
-  res.status(204).send();
-});
+app.use(express.json({ limit: "100mb", extended: true }));
 
 app.use(express.static("public"));
 
