@@ -14,7 +14,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static("public"));
 
 const userRouter = require("./routes/users.js");

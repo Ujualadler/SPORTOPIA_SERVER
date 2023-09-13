@@ -64,8 +64,4 @@ router.post('/deleteWinners',auth.verifyToken,tournamentController.deleteWinners
 router.get('/getBanner',adminController.getBanner)
 
 
-
-
-
-
 module.exports=router
