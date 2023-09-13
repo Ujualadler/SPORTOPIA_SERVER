@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json({ limit: "100mb", extended: true }));
 
 const corsOptions = {
-  origin: "http://localhost:5173", 
+  origin: ["http://localhost:5173","https://www.spotopia.site"], 
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
   optionsSuccessStatus: 204,
@@ -18,16 +18,16 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173'); // Replace with your frontend domain
-  res.setHeader('Access-Control-Allow-Methods', 'POST'); // Add the allowed methods
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Add the allowed headers
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.status(204).send();
 });
 
 app.options('/createCheckout', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173'); // Replace with your frontend domain
-  res.setHeader('Access-Control-Allow-Methods', 'POST'); // Add the allowed methods
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Add the allowed headers
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.status(204).send();
 });
 
