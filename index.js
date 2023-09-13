@@ -18,8 +18,15 @@ const corsOptions = {
   },
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  optionsSuccessStatus: 204, // Set the status code for successful OPTIONS requests
+  optionsSuccessStatus: 204, 
 };
+
+app.options("/createCheckout", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.sendStatus(204);
+});
 
 app.use(cors(corsOptions));
 
