@@ -17,13 +17,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use('/', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', ["http://localhost:5173","https://www.spotopia.site"]);
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.status(204).send();
-});
-
 app.options('/createCheckout', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', ["http://localhost:5173","https://www.spotopia.site"]);
   res.setHeader('Access-Control-Allow-Methods', 'POST');
