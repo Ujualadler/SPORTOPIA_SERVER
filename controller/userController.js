@@ -13,7 +13,7 @@ const sendVerifyMail = async (name, email, user_id, check) => {
     console.log("1")
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465,
+      port: 587,
       secure: false,
       requireTLS: true,
       auth: {
@@ -133,7 +133,7 @@ const signUp = async (req, res, next) => {
         result: userdetails,
         message: "You are successfully registered please verify your email",
       });
-      if (userdetail) {
+       if (userdetail) {
         sendVerifyMail(
           userdetails.name,
           userdetails.email,
