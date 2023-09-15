@@ -112,34 +112,26 @@ const signUp = async (req, res, next) => {
     const user = await userModel.find({ email: userdetails.email });
     if (user.length === 0) {
       userdetails.password = await bcrypt.hash(userdetails.password, 10);
-      let userdata = userModel
-        .create({
-          name: userdetails.name,
-          email: userdetails.email,
-          password: userdetails.password,
-          contactNumber: userdetails.phone,
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      let userdata = await userModel.create({
+        name: userdetails.name,
+        email: userdetails.email,
+        password: userdetails.password,
+        contactNumber: userdetails.phone,
+      });
       let userdetail = await userModel.findOne({ email: userdetails.email });
       if (userdetail) {
-        sendVerifyMail(
+        await sendVerifyMail(
           userdetails.name,
           userdetails.email,
           userdetail._id,
           true
         );
       }
-        res.json({
-          status: true,
-          result: userdetails,
-          message: "You are successfully registered please verify your email",
-        });
-      
+      res.json({
+        status: true,
+        result: userdetails,
+        message: "You are successfully registered, please verify your email",
+      });
     } else {
       return res.json({ error: "User already exists" });
     }
@@ -147,6 +139,7 @@ const signUp = async (req, res, next) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // user login
 
