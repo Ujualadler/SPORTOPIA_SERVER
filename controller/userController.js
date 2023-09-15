@@ -13,7 +13,7 @@ const sendVerifyMail = async (name, email, user_id, check) => {
     console.log("1")
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,
+      port: 465,
       secure: false,
       requireTLS: true,
       auth: {
@@ -127,6 +127,12 @@ const signUp = async (req, res, next) => {
           console.log(error);
         });
       let userdetail = await userModel.findOne({ email: userdetails.email });
+     
+      res.json({
+        status: true,
+        result: userdetails,
+        message: "You are successfully registered please verify your email",
+      });
       if (userdetail) {
         sendVerifyMail(
           userdetails.name,
@@ -135,11 +141,6 @@ const signUp = async (req, res, next) => {
           true
         );
       }
-      res.json({
-        status: true,
-        result: userdetails,
-        message: "You are successfully registered please verify your email",
-      });
     } else {
       return res.json({ error: "User already exists" });
     }
