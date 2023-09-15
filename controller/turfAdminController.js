@@ -27,13 +27,14 @@ const signUp = async (req, res, next) => {
           console.log(error);
         });
       let turfdetail = await turfModel.findOne({ email: turfdetails.email });
-      res.json({ status: true, result: turfdetails });
       usercontroller.sendVerifyMail(
         turfdetails.name,
         turfdetails.email,
         turfdetail._id,
         false
       );
+      res.json({ status: true, result: turfdetails });
+    
     } else {
       return res.json({ error: "User already exists" });
     }
