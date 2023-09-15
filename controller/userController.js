@@ -127,7 +127,7 @@ const signUp = async (req, res, next) => {
         });
       let userdetail = await userModel.findOne({ email: userdetails.email });
       if (userdetail) {
-        sendVerifyMail(
+        let verify=await sendVerifyMail(
           userdetails.name,
           userdetails.email,
           userdetail._id,

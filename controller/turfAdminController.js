@@ -28,7 +28,7 @@ const signUp = async (req, res, next) => {
         });
       let turfdetail = await turfModel.findOne({ email: turfdetails.email });
       if (turfdetail) {
-        usercontroller.sendVerifyMail(
+        let verifymail=await usercontroller.sendVerifyMail(
           turfdetails.name,
           turfdetails.email,
           turfdetail._id,
