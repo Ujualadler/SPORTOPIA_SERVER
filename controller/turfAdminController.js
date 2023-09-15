@@ -27,18 +27,16 @@ const signUp = async (req, res, next) => {
           console.log(error);
         });
       let turfdetail = await turfModel.findOne({ email: turfdetails.email });
-    
-      res.json({ status: true, result: turfdetails });
-      if(turfdetail){
+      if (turfdetail) {
         usercontroller.sendVerifyMail(
           turfdetails.name,
           turfdetails.email,
           turfdetail._id,
           false
         );
-        }
-  
-    
+
+        res.json({ status: true, result: turfdetails });
+      }
     } else {
       return res.json({ error: "User already exists" });
     }
@@ -155,7 +153,7 @@ const googlelogin = async (req, res, next) => {
       res.json({ userSignUp });
     }
   } catch (err) {
-    res.status(500).json({ error:err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -179,60 +177,59 @@ const otpLogin = async (req, res) => {
 
 const turfProfile = async (req, res, next) => {
   try {
-	  const id = req.user._id;
-	  let userDetails = await turfModel.findOne({ _id: id});
-	  if (userDetails) {
-		res.status(200).json({ data: userDetails });
-	  } else {
-		res.status(500).send({ error: "no user" });
-	  }
-	} catch (error) {
-	  res.json({ status: "failed", message: error.message });
-	}
-  };
-
-  const getAdminDetail = async (req, res) => {
-    try {
-      const user = req.user;
-      const userdata = await turfModel.findOne({ _id: user._id });
-      if (userdata) {
-      res.status(200).json({ data: userdata });
-      } else {
-      res.status(500).send({ error: "no user" });
-      }
-    } catch (error) {
-      res.json({ status: "failed", message: error.message });
-    }
-    };
-    
-    // profile editing in user side
-    
-    const editProfile = async (req, res, next) => {
-    const data = req.body;
     const id = req.user._id;
-    try {
-      await turfModel.updateOne(
+    let userDetails = await turfModel.findOne({ _id: id });
+    if (userDetails) {
+      res.status(200).json({ data: userDetails });
+    } else {
+      res.status(500).send({ error: "no user" });
+    }
+  } catch (error) {
+    res.json({ status: "failed", message: error.message });
+  }
+};
+
+const getAdminDetail = async (req, res) => {
+  try {
+    const user = req.user;
+    const userdata = await turfModel.findOne({ _id: user._id });
+    if (userdata) {
+      res.status(200).json({ data: userdata });
+    } else {
+      res.status(500).send({ error: "no user" });
+    }
+  } catch (error) {
+    res.json({ status: "failed", message: error.message });
+  }
+};
+
+// profile editing in user side
+
+const editProfile = async (req, res, next) => {
+  const data = req.body;
+  const id = req.user._id;
+  try {
+    await turfModel.updateOne(
       { _id: id },
       {
         $set: {
-        name: data.name,
-        contactNumber: data.contactNumber,
-        image: data.image,
-        city: data.city,
-        state: data.state,
-        pin: data.pin,
-        street: data.street,
-        age: data.age,
+          name: data.name,
+          contactNumber: data.contactNumber,
+          image: data.image,
+          city: data.city,
+          state: data.state,
+          pin: data.pin,
+          street: data.street,
+          age: data.age,
         },
       }
-      );
-      res.json({ status: "success" });
-    } catch (error) {
-      console.log(error.message);
-      res.json({ status: "failed", message: error.message });
-    }
-    };
-
+    );
+    res.json({ status: "success" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "failed", message: error.message });
+  }
+};
 
 module.exports = {
   signUp,
@@ -242,5 +239,5 @@ module.exports = {
   turfProfile,
   getAdminDetail,
   editProfile,
-  otpLogin
+  otpLogin,
 };

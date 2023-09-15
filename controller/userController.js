@@ -10,12 +10,11 @@ const dotenv = require("dotenv").config();
 
 const sendVerifyMail = async (name, email, user_id, check) => {
   try {
-    console.log("1")
+    console.log("1");
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      requireTLS: true,
+      port: 465,
+      secure: true,
       auth: {
         user: "sportopia2000@gmail.com",
         pass: process.env.EMAIL_PASSKEY,
@@ -36,7 +35,7 @@ const sendVerifyMail = async (name, email, user_id, check) => {
         }
       });
     } else {
-      console.log("2")
+      console.log("2");
       const mailOption = {
         from: "sportopia2000@gmail.com",
         to: email,
@@ -127,19 +126,19 @@ const signUp = async (req, res, next) => {
           console.log(error);
         });
       let userdetail = await userModel.findOne({ email: userdetails.email });
-     
-      res.json({
-        status: true,
-        result: userdetails,
-        message: "You are successfully registered please verify your email",
-      });
-       if (userdetail) {
+      if (userdetail) {
         sendVerifyMail(
           userdetails.name,
           userdetails.email,
           userdetail._id,
           true
         );
+
+        res.json({
+          status: true,
+          result: userdetails,
+          message: "You are successfully registered please verify your email",
+        });
       }
     } else {
       return res.json({ error: "User already exists" });
