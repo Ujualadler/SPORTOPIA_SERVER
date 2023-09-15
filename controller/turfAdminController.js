@@ -13,30 +13,22 @@ const signUp = async (req, res, next) => {
     const turfadmin = await turfModel.find({ email: turfdetails.email });
     if (turfadmin.length === 0) {
       turfdetails.password = await bcrypt.hash(turfdetails.password, 10);
-      turfModel
-        .create({
-          name: turfdetails.name,
-          email: turfdetails.email,
-          password: turfdetails.password,
-          contactNumber: turfdetails.phone,
-        })
-        .then((data) => {
-          // console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      let userdata = await turfModel.create({
+        name: turfdetails.name,
+        email: turfdetails.email,
+        password: turfdetails.password,
+        contactNumber: turfdetails.phone,
+      });
       let turfdetail = await turfModel.findOne({ email: turfdetails.email });
       if (turfdetail) {
-        let verifymail=await usercontroller.sendVerifyMail(
+        await usercontroller.sendVerifyMail(
           turfdetails.name,
           turfdetails.email,
           turfdetail._id,
           false
         );
-        }
-        res.json({ status: true, result: turfdetails });     
-
+      }
+      res.json({ status: true, result: turfdetails });
     } else {
       return res.json({ error: "User already exists" });
     }
@@ -44,6 +36,7 @@ const signUp = async (req, res, next) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // verifying turfAdmin
 
