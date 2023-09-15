@@ -10,6 +10,7 @@ const dotenv = require("dotenv").config();
 
 const sendVerifyMail = async (name, email, user_id, check) => {
   try {
+    console.log("1")
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -35,6 +36,7 @@ const sendVerifyMail = async (name, email, user_id, check) => {
         }
       });
     } else {
+      console.log("2")
       const mailOption = {
         from: "sportopia2000@gmail.com",
         to: email,
