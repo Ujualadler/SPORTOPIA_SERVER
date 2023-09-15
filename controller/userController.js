@@ -27,11 +27,11 @@ const sendVerifyMail = async (name, email, user_id, check) => {
         subject: "To verify your mail",
         html: `<p>Hii ${name}, Please click here to <a href="https://spotopia.site/verify/${user_id}">Verify</a> your mail</p>`,
       };
-      transporter.sendMail(mailOption, function (error, info) {
+      transporter.sendMail(mailOption, (error, info) => {
         if (error) {
-          console.log(error);
+          console.log("Email could not be sent", error.message);
         } else {
-          console.log("Email has been sent:-", info.response);
+          console.log("Email has been sent:", info.response);
         }
       });
     } else {
@@ -127,7 +127,7 @@ const signUp = async (req, res, next) => {
         });
       let userdetail = await userModel.findOne({ email: userdetails.email });
       if (userdetail) {
-        let verify=await sendVerifyMail(
+        sendVerifyMail(
           userdetails.name,
           userdetails.email,
           userdetail._id,
