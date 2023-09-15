@@ -34,9 +34,9 @@ const signUp = async (req, res, next) => {
           turfdetail._id,
           false
         );
+        }
+        res.json({ status: true, result: turfdetails });     
 
-        res.json({ status: true, result: turfdetails });
-      }
     } else {
       return res.json({ error: "User already exists" });
     }

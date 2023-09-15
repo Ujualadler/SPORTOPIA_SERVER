@@ -133,13 +133,13 @@ const signUp = async (req, res, next) => {
           userdetail._id,
           true
         );
-
+      }
         res.json({
           status: true,
           result: userdetails,
           message: "You are successfully registered please verify your email",
         });
-      }
+      
     } else {
       return res.json({ error: "User already exists" });
     }
