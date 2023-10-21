@@ -1,5 +1,5 @@
 # SPORTOPIA_SERVER
-SERVER FOR SPORTOPIA
+TURF BOOKING WEBSITE
 
 #Three user roles: User, Turf Admin, Super Admin.
 #Users can book their favorite turf.
